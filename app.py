@@ -26,7 +26,16 @@ def upload_file():
         return redirect(request.url)
     return 'THIS IS BACKEND! THERE IS NOTHING HERE!'
 
-@app.route('/showinput', methods=['GET'])
-def show_input():
+@app.route('/getinput', methods=['GET'])
+def get_input():
     df = pd.read_csv('input.csv')
-    return str(df.shape[0])
+    list_columns = []
+    result = {
+        'num_rows': df.shape[0],
+        'num_cols': df.shape[1]
+    }
+    for item in df.columns:
+        if "Unnamed" not in item:
+            list_columns.append(item)
+    result.update({'list_columns':list_columns})
+    return result
