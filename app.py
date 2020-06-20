@@ -39,3 +39,8 @@ def get_input():
             list_columns.append(item)
     result.update({'list_columns':list_columns})
     return result
+
+@app.route('/inputtable', methods=['GET'])
+def show_table():
+    df = pd.read_csv('input.csv')
+    return df.to_html(header='true', index=False)
